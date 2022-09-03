@@ -15,10 +15,14 @@ public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
     private String username;
     private String password;
-    public Member(String username, String password){
+    private String address;
+    public Member(String name, String username, String password, String address){
+        this.name = name;
         this.username = username;
         this.password = password;
+        this.address = address;
     }
 }
