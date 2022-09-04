@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import sotree.dia.domain.Member;
 import sotree.dia.domain.SignupDto;
 import sotree.dia.repository.MemberRepository;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,8 +19,15 @@ public class MemberService {
         log.info("찾으려는 유저의 이름 : {}, 결과 : {}", username, find);
         return find;
     }
+    public List<Member> findAllByName(String name){
+        List<Member> find = memberRepository.findAllByName(name);
+        if(find == null || find.isEmpty())
+            return null;
+        return find;
+    }
     public Long save(SignupDto signupDto){
-        Member member = new Member(signupDto.getName(), signupDto.getUsername(), signupDto.getPassword() ,signupDto.getAddress());
+        Member member = new Member(signupDto.getName(), signupDto.getUsername(),
+                signupDto.getPassword(), signupDto.getPersonalNumber(), signupDto.getAddress());
         Member save = memberRepository.save(member);
         log.info("신규 유저 {} 등록 성공", member.getUsername());
         return save.getId();

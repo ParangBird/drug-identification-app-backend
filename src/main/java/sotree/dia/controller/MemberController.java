@@ -8,9 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-import sotree.dia.domain.LoginDto;
-import sotree.dia.domain.Member;
-import sotree.dia.domain.SignupDto;
+import sotree.dia.domain.*;
 import sotree.dia.service.MemberService;
 
 import java.util.List;
@@ -21,6 +19,7 @@ import java.util.Optional;
 @Slf4j
 public class MemberController {
     private final MemberService memberService;
+
     @PostMapping("/api/login")
     public String login(@ModelAttribute @Validated LoginDto loginDto, BindingResult bindingResult){
         log.info("로그인 시도 : {} {}", loginDto.getUsername(), loginDto.getPassword());
@@ -55,6 +54,42 @@ public class MemberController {
         }
         memberService.save(signupDto);
         return "회원가입 성공";
+    }
+
+    @PostMapping("/api/findId")
+    public String findId(@ModelAttribute @Validated FindIdDto findIdDto, BindingResult bindingResult){
+        if(bindingResult.hasErrors()) {
+            List<ObjectError> allErrors = bindingResult.getAllErrors();
+            for (ObjectError error : allErrors) {
+                log.info("아이디 찾기 폼 입력 에러 {}", error.toString());
+            }
+            return allErrors.get(0).getDefaultMessage();
+        }
+        List<Member> sameNames = memberService.findAllByName(findIdDto.getName());
+        if(sameNames == null || sameNames.isEmpty()){
+            return "회원 정보가 비정확합니다.";
+        }
+        for (Member sameName : sameNames) {
+            if(findIdDto.getPersonalNumber() == sameName.getPersonalNumber())
+                return "아이디 : " + sameName.getPersonalNumber();
+        }
+        return "회원 정보가 비정확합니다.";
+    }
+
+    @PostMapping("/api/findPw")
+    public String findPw(@ModelAttribute @Validated FindPwDto findPwDto, BindingResult bindingResult){
+        if(bindingResult.hasErrors()) {
+            List<ObjectError> allErrors = bindingResult.getAllErrors();
+            for (ObjectError error : allErrors) {
+                log.info("비밀번호 찾기 폼 입력 에러 {}", error.toString());
+            }
+            return allErrors.get(0).getDefaultMessage();
+        }
+        Optional<Member> find = memberService.findByUsername(findPwDto.getUsername());
+        if(find == null || find.isEmpty()){
+            return "회원 정보가 비정확합니다.";
+        }
+        return "비밀 번호 : " + find.get().getPassword();
     }
 
 }
