@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,7 +20,7 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping("/api/login")
-    public String login(@ModelAttribute @Validated LoginDto loginDto, BindingResult bindingResult){
+    public Object login(@ModelAttribute @Validated LoginDto loginDto, BindingResult bindingResult){
         log.info("로그인 시도 : {} {}", loginDto.getUsername(), loginDto.getPassword());
         if(bindingResult.hasErrors()){
             List<ObjectError> allErrors = bindingResult.getAllErrors();
@@ -34,15 +33,15 @@ public class MemberController {
         if(find.isEmpty()){
             return "회원 정보가 비정확합니다.";
         }
-        return "로그인 성공";
+        return find.get();
     }
 
     @PostMapping("/api/signup")
     public String signup(@ModelAttribute @Validated SignupDto signupDto, BindingResult bindingResult){
-        if(signupDto.getPassword() != signupDto.getPasswordCheck()){
+        if(!signupDto.getPassword().equals(signupDto.getPasswordCheck())){
             return "비밀번호를 재확인해주세요";
         }
-        if(memberService.findByUsername(signupDto.getUsername()) != null){
+        if(memberService.findByUsername(signupDto.getUsername()).isPresent()){
             return "이미 존재하는 아이디입니다.";
         }
         if(bindingResult.hasErrors()){
