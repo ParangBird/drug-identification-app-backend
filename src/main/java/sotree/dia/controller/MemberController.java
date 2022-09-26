@@ -69,8 +69,8 @@ public class MemberController {
             return "회원 정보가 비정확합니다.";
         }
         for (Member sameName : sameNames) {
-            if(findIdDto.getPersonalNumber() == sameName.getPersonalNumber())
-                return "아이디 : " + sameName.getPersonalNumber();
+            if(findIdDto.getPersonalNumber().equals(sameName.getPersonalNumber()))
+                return "아이디 : " + sameName.getUsername();
         }
         return "회원 정보가 비정확합니다.";
     }
