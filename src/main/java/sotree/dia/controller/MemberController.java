@@ -33,6 +33,9 @@ public class MemberController {
         if(find.isEmpty()){
             return "회원 정보가 비정확합니다.";
         }
+        if(!find.get().getPassword().equals(loginDto.getPassword())){
+            return "회원 정보가 비정확합니다.";
+        }
         return find.get();
     }
 
