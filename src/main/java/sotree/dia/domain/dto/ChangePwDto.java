@@ -1,4 +1,4 @@
-package sotree.dia.domain;
+package sotree.dia.domain.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -4,12 +4,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
-import sotree.dia.domain.*;
+import org.springframework.web.bind.annotation.*;
+import sotree.dia.domain.dto.*;
+import sotree.dia.domain.entity.Member;
 import sotree.dia.service.MemberService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

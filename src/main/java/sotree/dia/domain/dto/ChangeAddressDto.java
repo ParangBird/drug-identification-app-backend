@@ -1,4 +1,4 @@
-package sotree.dia.domain;
+package sotree.dia.domain.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class FindPwDto {
+public class ChangeAddressDto {
     private String username;
+    private String address;
 }
