@@ -9,6 +9,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class FindPwDto {
+public class ChangePwDto {
     private String username;
+    private String oldPassword;
+    private String newPassword;
 }

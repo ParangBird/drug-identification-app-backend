@@ -25,11 +25,9 @@ public class MemberService {
             return null;
         return find;
     }
-    public Long save(SignupDto signupDto){
-        Member member = new Member(signupDto.getName(), signupDto.getUsername(),
-                signupDto.getPassword(), signupDto.getPersonalNumber(), signupDto.getAddress());
-        Member save = memberRepository.save(member);
-        log.info("신규 유저 {} 등록 성공", member.getUsername());
+    public Long save(Member newMember){
+        Member save = memberRepository.save(newMember);
+        log.info("유저 {} 등록 성공", newMember.getUsername());
         return save.getId();
     }
 }

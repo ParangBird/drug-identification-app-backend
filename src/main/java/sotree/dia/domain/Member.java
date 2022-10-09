@@ -1,5 +1,6 @@
 package sotree.dia.domain;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import javax.persistence.*;
@@ -23,11 +24,16 @@ public class Member {
     private String personalNumber;
     @NotNull
     private String address;
+    @Builder
     public Member(String name, String username, String password, String personalNumber, String address){
         this.name = name;
         this.username = username;
         this.password = password;
         this.personalNumber = personalNumber;
         this.address = address;
+    }
+    public Member updatePassword(String password){
+        this.password = password;
+        return this;
     }
 }

@@ -42,6 +42,7 @@ public class MemberController {
     @PostMapping("/api/signup")
     public String signup(@ModelAttribute @Validated SignupDto signupDto, BindingResult bindingResult){
         if(!signupDto.getPassword().equals(signupDto.getPasswordCheck())){
+            log.info("{}, {}", signupDto.getPassword(), signupDto.getPasswordCheck());
             return "비밀번호를 재확인해주세요";
         }
         if(memberService.findByUsername(signupDto.getUsername()).isPresent()){
@@ -54,7 +55,10 @@ public class MemberController {
             }
             return allErrors.get(0).getDefaultMessage();
         }
-        memberService.save(signupDto);
+        Member newMember = Member.builder().name(signupDto.getName()).username(signupDto.getUsername())
+                        .password(signupDto.getPassword()).personalNumber(signupDto.getPersonalNumber())
+                        .address(signupDto.getAddress()).build();
+        memberService.save(newMember);
         return "회원가입 성공";
     }
 
@@ -92,6 +96,24 @@ public class MemberController {
             return "회원 정보가 비정확합니다.";
         }
         return "비밀 번호 : " + find.get().getPassword();
+    }
+    
+    @PostMapping("/api/changePw")
+    private String changePw(@ModelAttribute @Validated ChangePwDto changePwDto, BindingResult bindingResult){
+        if(bindingResult.hasErrors()) {
+            List<ObjectError> allErrors = bindingResult.getAllErrors();
+            for (ObjectError error : allErrors) {
+                log.info("비밀번호 변경 폼 입력 에러 {}", error.toString());
+            }
+            return allErrors.get(0).getDefaultMessage();
+        }
+        Optional<Member> find = memberService.findByUsername(changePwDto.getUsername());
+        if(find == null || find.isEmpty() || !find.get().getPassword().equals(changePwDto.getOldPassword())){
+            return "회원 정보가 비정확합니다.";
+        }
+        Member member = find.get().updatePassword(changePwDto.getNewPassword());
+        memberService.save(member);
+        return "회원 정보 변경 성공";
     }
 
 }
