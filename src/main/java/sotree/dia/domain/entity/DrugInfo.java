@@ -11,8 +11,6 @@ import javax.persistence.*;
 @RequiredArgsConstructor
 public class DrugInfo {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     @Column(name = "drug_id")
     private Long drugId;
     @Column(name = "drug_name")
