@@ -36,4 +36,8 @@ public class Member {
         this.password = password;
         return this;
     }
+    public Member updateAddress(String newAddress){
+        this.address = newAddress;
+        return this;
+    }
 }

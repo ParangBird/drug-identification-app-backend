@@ -99,7 +99,7 @@ public class MemberController {
     }
     
     @PostMapping("/api/changePw")
-    private String changePw(@ModelAttribute @Validated ChangePwDto changePwDto, BindingResult bindingResult){
+    public String changePw(@ModelAttribute @Validated ChangePwDto changePwDto, BindingResult bindingResult){
         if(bindingResult.hasErrors()) {
             List<ObjectError> allErrors = bindingResult.getAllErrors();
             for (ObjectError error : allErrors) {
@@ -113,7 +113,25 @@ public class MemberController {
         }
         Member member = find.get().updatePassword(changePwDto.getNewPassword());
         memberService.save(member);
-        return "회원 정보 변경 성공";
+        return "회원 비밀번호 변경 성공";
+    }
+
+    @PostMapping("/api/changeAddress")
+    public String changeAddress(@ModelAttribute @Validated ChangeAddressDto changeAddressDto, BindingResult bindingResult){
+        if(bindingResult.hasErrors()) {
+            List<ObjectError> allErrors = bindingResult.getAllErrors();
+            for (ObjectError error : allErrors) {
+                log.info("주소 변경 폼 입력 에러 {}", error.toString());
+            }
+            return allErrors.get(0).getDefaultMessage();
+        }
+        Optional<Member> find = memberService.findByUsername(changeAddressDto.getUsername());
+        if(find == null || find.isEmpty()){
+            return "회원 정보가 비정확합니다.";
+        }
+        Member member = find.get().updateAddress(changeAddressDto.getAddress());
+        memberService.save(member);
+        return "회원 주소 변경";
     }
 
 }
