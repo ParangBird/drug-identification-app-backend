@@ -11,6 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface DrugInfoRepository extends JpaRepository<DrugInfo, Long> {
+    Optional<DrugInfo> findById(Long id);
     Optional<DrugInfo> findByDrugId(Long id);
     @Query(value = "SELECT d from DrugInfo d WHERE d.drugName LIKE %:drugName%")
     List<DrugInfo> findByDrugNameContains(@Param("drugName") String drugName);

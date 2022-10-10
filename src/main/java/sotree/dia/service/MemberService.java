@@ -29,4 +29,10 @@ public class MemberService {
         log.info("유저 {} 등록 성공", newMember.getUsername());
         return save.getId();
     }
+    public Optional<Member> findById(Long id){
+        Optional<Member> find = memberRepository.findById(id);
+        if(find == null || find.isEmpty())
+            return null;
+        return find;
+    }
 }
