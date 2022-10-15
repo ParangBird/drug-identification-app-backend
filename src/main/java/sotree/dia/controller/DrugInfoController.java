@@ -17,9 +17,19 @@ public class DrugInfoController {
         DrugInfo drugInfo = drugInfoService.findByDrugId(200300406L);
         return drugInfo;
     }
+    @GetMapping("/api/drug/nameSearch")
+    public List<DrugInfo> nameSearch(@RequestParam String query){
+        List<DrugInfo> drugInfos = drugInfoService.findByDrugNameContains(query);
+        return drugInfos;
+    }
+    @GetMapping("/api/drug/ingredientSearch")
+    public List<DrugInfo> ingredientSearch(@RequestParam String query){
+        List<DrugInfo> drugInfos = drugInfoService.findByDrugIngredientContains(query);
+        return drugInfos;
+    }
     @GetMapping("/api/drug/textSearch")
-    public List<DrugInfo> textSearch(@RequestParam String drugName){
-        List<DrugInfo> drugInfos = drugInfoService.findByDrugNameContains(drugName);
+    public List<DrugInfo> textSearch(@RequestParam String query){
+        List<DrugInfo> drugInfos = drugInfoService.findByDrugNameAndDrugIngredientContains(query);
         return drugInfos;
     }
 }

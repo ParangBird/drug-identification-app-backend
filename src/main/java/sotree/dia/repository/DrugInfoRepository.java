@@ -13,6 +13,10 @@ import java.util.Optional;
 public interface DrugInfoRepository extends JpaRepository<DrugInfo, Long> {
     Optional<DrugInfo> findById(Long id);
     Optional<DrugInfo> findByDrugId(Long id);
-    @Query(value = "SELECT d from DrugInfo d WHERE d.drugName LIKE %:drugName%")
-    List<DrugInfo> findByDrugNameContains(@Param("drugName") String drugName);
+    @Query(value = "SELECT d from DrugInfo d WHERE d.drugName LIKE %:query%")
+    List<DrugInfo> findByDrugNameContains(@Param("query") String query);
+    @Query(value = "SELECT d from DrugInfo d WHERE d.drugIngredient LIKE %:query%")
+    List<DrugInfo> findByDrugIngredientContains(@Param("query") String query);
+    @Query(value = "SELECT d from DrugInfo d WHERE d.drugName LIKE %:query% or d.drugIngredient LIKE %:query%")
+    List<DrugInfo> findByDrugNameAndDrugIngredientContains(@Param("query") String query);
 }

@@ -18,7 +18,14 @@ public class DrugInfoService {
             return null;
         return find.get();
     }
-    public List<DrugInfo> findByDrugNameContains(String drugName){
-        return drugInfoRepository.findByDrugNameContains(drugName);
+    public List<DrugInfo> findByDrugNameContains(String query){
+        return drugInfoRepository.findByDrugNameContains(query);
+    }
+    public List<DrugInfo> findByDrugIngredientContains(String query){
+        return drugInfoRepository.findByDrugIngredientContains(query);
+    }
+
+    public List<DrugInfo> findByDrugNameAndDrugIngredientContains(String query){
+        return drugInfoRepository.findByDrugNameAndDrugIngredientContains(query);
     }
 }
