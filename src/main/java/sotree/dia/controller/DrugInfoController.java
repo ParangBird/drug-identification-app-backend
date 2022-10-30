@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import sotree.dia.domain.entity.DrugInfo;
+import sotree.dia.exception.NoSuchDrugIdException;
 import sotree.dia.service.DrugInfoService;
 
 import java.io.IOException;
@@ -44,8 +45,13 @@ public class DrugInfoController {
 }
 
     @GetMapping(value = "/api/image/{drugId}", produces = MediaType.IMAGE_PNG_VALUE)
-    public byte[] drugImage(@PathVariable("drugId") String drugId) throws IOException {
-        InputStream in = getClass().getResourceAsStream("/images/" + drugId + ".png");
-        return IOUtils.toByteArray(in);
+    public byte[] drugImage(@PathVariable("drugId") String drugId) throws IOException{
+        try {
+            InputStream in = getClass().getResourceAsStream("/images/" + drugId + ".png");
+            return IOUtils.toByteArray(in);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new NoSuchDrugIdException(e);
+        }
     }
 }
