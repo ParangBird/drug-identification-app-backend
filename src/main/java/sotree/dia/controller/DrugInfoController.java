@@ -43,9 +43,9 @@ public class DrugInfoController {
         return drugInfos;
 }
 
-    @GetMapping(value = "/api/image/{drugId}", produces = MediaType.IMAGE_JPEG_VALUE)
+    @GetMapping(value = "/api/image/{drugId}", produces = MediaType.IMAGE_PNG_VALUE)
     public byte[] drugImage(@PathVariable("drugId") String drugId) throws IOException {
-        InputStream in = getClass().getResourceAsStream("/images/" + drugId + ".jpg");
+        InputStream in = getClass().getResourceAsStream("/images/" + drugId + ".png");
         return IOUtils.toByteArray(in);
     }
 }
