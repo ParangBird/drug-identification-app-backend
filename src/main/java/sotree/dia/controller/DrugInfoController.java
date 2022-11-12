@@ -20,9 +20,9 @@ import java.util.List;
 public class DrugInfoController {
     private final DrugInfoService drugInfoService;
 
-    @GetMapping("/api/drug/test")
-    public DrugInfo helloDrug() {
-        DrugInfo drugInfo = drugInfoService.findByDrugId(200300406L);
+    @GetMapping("/api/drug")
+    public DrugInfo searchDrugInfo(@RequestParam Long query) {
+        DrugInfo drugInfo = drugInfoService.findByDrugId(query);
         return drugInfo;
     }
 
