@@ -12,7 +12,7 @@ import sotree.dia.exception.NoSuchDrugIdException;
 public class ExceptionController {
     @ExceptionHandler(NoSuchDrugIdException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public Response NotFoundException(Exception e){
+    public Response NotFoundException(Exception e) {
         e.printStackTrace();
         return new Response("404", "NOT FOUND");
     }

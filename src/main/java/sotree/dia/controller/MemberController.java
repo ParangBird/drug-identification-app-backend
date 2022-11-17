@@ -1,4 +1,5 @@
 package sotree.dia.controller;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
@@ -20,9 +21,9 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping("/api/login")
-    public Object login(@ModelAttribute @Validated LoginDto loginDto, BindingResult bindingResult){
+    public Object login(@ModelAttribute @Validated LoginDto loginDto, BindingResult bindingResult) {
         log.info("로그인 시도 : {} {}", loginDto.getUsername(), loginDto.getPassword());
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             List<ObjectError> allErrors = bindingResult.getAllErrors();
             for (ObjectError error : allErrors) {
                 log.info("로그인 폼 입력 에러 {}", error.toString());
@@ -30,25 +31,25 @@ public class MemberController {
             return allErrors.get(0).getDefaultMessage();
         }
         Optional<Member> find = memberService.findByUsername(loginDto.getUsername());
-        if(find.isEmpty()){
+        if (find.isEmpty()) {
             return "회원 정보가 비정확합니다.";
         }
-        if(!find.get().getPassword().equals(loginDto.getPassword())){
+        if (!find.get().getPassword().equals(loginDto.getPassword())) {
             return "회원 정보가 비정확합니다.";
         }
         return find.get();
     }
 
     @PostMapping("/api/signup")
-    public String signup(@ModelAttribute @Validated SignupDto signupDto, BindingResult bindingResult){
-        if(!signupDto.getPassword().equals(signupDto.getPasswordCheck())){
+    public String signup(@ModelAttribute @Validated SignupDto signupDto, BindingResult bindingResult) {
+        if (!signupDto.getPassword().equals(signupDto.getPasswordCheck())) {
             log.info("{}, {}", signupDto.getPassword(), signupDto.getPasswordCheck());
             return "비밀번호를 재확인해주세요";
         }
-        if(memberService.findByUsername(signupDto.getUsername()).isPresent()){
+        if (memberService.findByUsername(signupDto.getUsername()).isPresent()) {
             return "이미 존재하는 아이디입니다.";
         }
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             List<ObjectError> allErrors = bindingResult.getAllErrors();
             for (ObjectError error : allErrors) {
                 log.info("회원가입 폼 입력 에러 {}", error.toString());
@@ -56,15 +57,15 @@ public class MemberController {
             return allErrors.get(0).getDefaultMessage();
         }
         Member newMember = Member.builder().name(signupDto.getName()).username(signupDto.getUsername())
-                        .password(signupDto.getPassword()).personalNumber(signupDto.getPersonalNumber())
-                        .address(signupDto.getAddress()).build();
+                .password(signupDto.getPassword()).personalNumber(signupDto.getPersonalNumber())
+                .address(signupDto.getAddress()).build();
         memberService.save(newMember);
         return "회원가입 성공";
     }
 
     @PostMapping("/api/findId")
-    public String findId(@ModelAttribute @Validated FindIdDto findIdDto, BindingResult bindingResult){
-        if(bindingResult.hasErrors()) {
+    public String findId(@ModelAttribute @Validated FindIdDto findIdDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
             List<ObjectError> allErrors = bindingResult.getAllErrors();
             for (ObjectError error : allErrors) {
                 log.info("아이디 찾기 폼 입력 에러 {}", error.toString());
@@ -72,19 +73,19 @@ public class MemberController {
             return allErrors.get(0).getDefaultMessage();
         }
         List<Member> sameNames = memberService.findAllByName(findIdDto.getName());
-        if(sameNames == null || sameNames.isEmpty()){
+        if (sameNames == null || sameNames.isEmpty()) {
             return "회원 정보가 비정확합니다.";
         }
         for (Member sameName : sameNames) {
-            if(findIdDto.getPersonalNumber().equals(sameName.getPersonalNumber()))
+            if (findIdDto.getPersonalNumber().equals(sameName.getPersonalNumber()))
                 return "아이디 : " + sameName.getUsername();
         }
         return "회원 정보가 비정확합니다.";
     }
 
     @PostMapping("/api/findPw")
-    public String findPw(@ModelAttribute @Validated FindPwDto findPwDto, BindingResult bindingResult){
-        if(bindingResult.hasErrors()) {
+    public String findPw(@ModelAttribute @Validated FindPwDto findPwDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
             List<ObjectError> allErrors = bindingResult.getAllErrors();
             for (ObjectError error : allErrors) {
                 log.info("비밀번호 찾기 폼 입력 에러 {}", error.toString());
@@ -92,15 +93,15 @@ public class MemberController {
             return allErrors.get(0).getDefaultMessage();
         }
         Optional<Member> find = memberService.findByUsername(findPwDto.getUsername());
-        if(find == null || find.isEmpty()){
+        if (find == null || find.isEmpty()) {
             return "회원 정보가 비정확합니다.";
         }
         return "비밀 번호 : " + find.get().getPassword();
     }
-    
+
     @PostMapping("/api/changePw")
-    public String changePw(@ModelAttribute @Validated ChangePwDto changePwDto, BindingResult bindingResult){
-        if(bindingResult.hasErrors()) {
+    public String changePw(@ModelAttribute @Validated ChangePwDto changePwDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
             List<ObjectError> allErrors = bindingResult.getAllErrors();
             for (ObjectError error : allErrors) {
                 log.info("비밀번호 변경 폼 입력 에러 {}", error.toString());
@@ -108,7 +109,7 @@ public class MemberController {
             return allErrors.get(0).getDefaultMessage();
         }
         Optional<Member> find = memberService.findByUsername(changePwDto.getUsername());
-        if(find == null || find.isEmpty() || !find.get().getPassword().equals(changePwDto.getOldPassword())){
+        if (find == null || find.isEmpty() || !find.get().getPassword().equals(changePwDto.getOldPassword())) {
             return "회원 정보가 비정확합니다.";
         }
         Member member = find.get().updatePassword(changePwDto.getNewPassword());
@@ -117,8 +118,8 @@ public class MemberController {
     }
 
     @PostMapping("/api/changeAddress")
-    public String changeAddress(@ModelAttribute @Validated ChangeAddressDto changeAddressDto, BindingResult bindingResult){
-        if(bindingResult.hasErrors()) {
+    public String changeAddress(@ModelAttribute @Validated ChangeAddressDto changeAddressDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
             List<ObjectError> allErrors = bindingResult.getAllErrors();
             for (ObjectError error : allErrors) {
                 log.info("주소 변경 폼 입력 에러 {}", error.toString());
@@ -126,7 +127,7 @@ public class MemberController {
             return allErrors.get(0).getDefaultMessage();
         }
         Optional<Member> find = memberService.findByUsername(changeAddressDto.getUsername());
-        if(find == null || find.isEmpty()){
+        if (find == null || find.isEmpty()) {
             return "회원 정보가 비정확합니다.";
         }
         Member member = find.get().updateAddress(changeAddressDto.getAddress());

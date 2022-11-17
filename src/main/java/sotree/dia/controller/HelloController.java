@@ -14,10 +14,11 @@ import java.io.InputStream;
 @RestController
 public class HelloController {
     @GetMapping("/hello")
-    public String hello(HttpServletRequest request){
+    public String hello(HttpServletRequest request) {
         log.info("hello {}", request.getRemoteHost());
         return "hello";
     }
+
     @GetMapping(value = "/image-test", produces = MediaType.IMAGE_PNG_VALUE)
     public byte[] hello() throws IOException {
         InputStream in = getClass().getResourceAsStream("/images/logo.png");

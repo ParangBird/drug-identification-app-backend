@@ -42,14 +42,14 @@ public class DrugInfoController {
     public List<DrugInfo> textSearch(@RequestParam String query) {
         List<DrugInfo> drugInfos = drugInfoService.findByDrugNameAndDrugIngredientContains(query);
         return drugInfos;
-}
+    }
 
     @GetMapping(value = "/api/image/{drugId}", produces = MediaType.IMAGE_PNG_VALUE)
-    public byte[] drugImage(@PathVariable("drugId") String drugId) throws IOException{
+    public byte[] drugImage(@PathVariable("drugId") String drugId) throws IOException {
         try {
             InputStream in = getClass().getResourceAsStream("/images/" + drugId + ".png");
             return IOUtils.toByteArray(in);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             throw new NoSuchDrugIdException(e);
         }

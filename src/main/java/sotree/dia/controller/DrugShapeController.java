@@ -15,8 +15,8 @@ public class DrugShapeController {
 
     @GetMapping("/api/shape/search")
     public List<Long> searchDrugShape(@RequestParam(value = "letter", required = false) String letter,
-                                           @RequestParam(value = "form", required = false) String form,
-                                           @RequestParam(value = "color",required = false) String color) {
+                                      @RequestParam(value = "form", required = false) String form,
+                                      @RequestParam(value = "color", required = false) String color) {
         List<Long> drugByShape = drugShapeService.findDrugByShape(letter, form, color);
         return drugByShape;
     }
