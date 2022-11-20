@@ -21,9 +21,12 @@ public class DrugInfoController {
     private final DrugInfoService drugInfoService;
 
     @GetMapping("/api/drug")
-    public DrugInfo searchDrugInfo(@RequestParam Long query) {
+    public Object searchDrugInfo(@RequestParam Long query) {
         DrugInfo drugInfo = drugInfoService.findByDrugId(query);
-        return drugInfo;
+        if(drugInfo == null){
+            return "https://nedrug.mfds.go.kr/pbp/CCBBB01/getItemDetail?itemSeq=" + query;
+        }
+        return (DrugInfo) drugInfo;
     }
 
     @GetMapping("/api/drug/nameSearch")
@@ -51,7 +54,7 @@ public class DrugInfoController {
             return IOUtils.toByteArray(in);
         } catch (Exception e) {
             e.printStackTrace();
-            throw new NoSuchDrugIdException(e);
+            throw new NoSuchDrugIdException(e, "https://nedrug.mfds.go.kr/pbp/CCBBB01/getItemDetail?itemSeq=" + drugId);
         }
     }
 }

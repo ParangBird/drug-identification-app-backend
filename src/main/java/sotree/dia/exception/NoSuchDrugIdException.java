@@ -1,6 +1,7 @@
 package sotree.dia.exception;
 
 public class NoSuchDrugIdException extends RuntimeException {
+    private String nedrugUrl;
     public NoSuchDrugIdException() {
         super();
     }
@@ -15,5 +16,14 @@ public class NoSuchDrugIdException extends RuntimeException {
 
     public NoSuchDrugIdException(Throwable cause) {
         super(cause);
+    }
+
+    public NoSuchDrugIdException(Throwable cause, String nedrugUrl){
+        super(cause);
+        this.nedrugUrl = nedrugUrl;
+    }
+
+    public String getNedrugUrl() {
+        return nedrugUrl;
     }
 }
