@@ -23,7 +23,7 @@ public class DrugInfoController {
     @GetMapping("/api/drug")
     public Object searchDrugInfo(@RequestParam Long query) {
         DrugInfo drugInfo = drugInfoService.findByDrugId(query);
-        if(drugInfo == null){
+        if (drugInfo == null) {
             return "https://nedrug.mfds.go.kr/pbp/CCBBB01/getItemDetail?itemSeq=" + query;
         }
         return (DrugInfo) drugInfo;

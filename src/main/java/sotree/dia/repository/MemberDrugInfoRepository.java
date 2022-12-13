@@ -11,6 +11,7 @@ import java.util.List;
 
 public interface MemberDrugInfoRepository extends JpaRepository<MemberDrugInfo, Long> {
     List<MemberDrugInfo> findAllByMemberId(Long id);
+
     @Modifying
     @Transactional
     @Query("DELETE from MemberDrugInfo WHERE memberId = :memberId and drugId = :drugId")

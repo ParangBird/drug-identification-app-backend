@@ -13,7 +13,8 @@ public class MemberDrugInfo {
     private Long id;
     private Long memberId;
     private Long drugId;
-    public MemberDrugInfo(Long memberId, Long drugId){
+
+    public MemberDrugInfo(Long memberId, Long drugId) {
         this.memberId = memberId;
         this.drugId = drugId;
     }

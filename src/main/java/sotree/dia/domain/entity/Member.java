@@ -3,6 +3,7 @@ package sotree.dia.domain.entity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -24,19 +25,22 @@ public class Member {
     private String personalNumber;
     @NotNull
     private String address;
+
     @Builder
-    public Member(String name, String username, String password, String personalNumber, String address){
+    public Member(String name, String username, String password, String personalNumber, String address) {
         this.name = name;
         this.username = username;
         this.password = password;
         this.personalNumber = personalNumber;
         this.address = address;
     }
-    public Member updatePassword(String password){
+
+    public Member updatePassword(String password) {
         this.password = password;
         return this;
     }
-    public Member updateAddress(String newAddress){
+
+    public Member updateAddress(String newAddress) {
         this.address = newAddress;
         return this;
     }
