@@ -3,13 +3,13 @@ package sotree.dia.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import sotree.dia.domain.entity.DrugInfo;
 
 import java.util.List;
 import java.util.Optional;
 
-@Repository
+@RepositoryRestResource
 public interface DrugInfoRepository extends JpaRepository<DrugInfo, Long> {
     Optional<DrugInfo> findById(Long id);
 
