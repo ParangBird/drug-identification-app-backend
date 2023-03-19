@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    url: jdbc:mysql://localhost:3306/dia?autoReconnect=true&characterEncoding=utf8
+    password: '1111'
+  data:
+    rest:
+      detection-strategy: annotated
+      base-path: /api
+  jpa:
+    generate-ddl: 'true'
+    hibernate:
+      ddl-auto: update
+  mvc:
+    throw-exception-if-no-handler-found: 'true'
+  web:
+    resources:
+      add-mappings: 'false'
