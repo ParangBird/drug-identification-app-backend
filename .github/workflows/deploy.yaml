@@ -7,7 +7,7 @@ on:
 
 env:
   S3_BUCKET_NAME: s3-dia
-  RSEOURCE_PATH: ./src/main/resources/application.yaml
+  RESOUCRE_PATH: ./src/main/resources/application.yaml
   CODE_DEPLOY_APPLICATION_NAME: DIA
   CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: DIA-GROUP
 
