@@ -16,7 +16,6 @@ class HelloControllerTest {
     MockMvc mockMvc;
 
     @Test
-    @Disabled
     void mockMvcTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/hello"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
