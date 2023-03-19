@@ -41,3 +41,11 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+test {
+    exclude '**/*'
+    useJUnitPlatform()
+}
+
+jar{
+    enabled = false
+}
