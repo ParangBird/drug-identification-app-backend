@@ -7,6 +7,7 @@ on:
 
 env:
   S3_BUCKET_NAME: s3-dia
+  RSEOURCE_PATH: ./src/main/resources/application.yaml
   CODE_DEPLOY_APPLICATION_NAME: DIA
   CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: DIA-GROUP
 
@@ -22,6 +23,14 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
+
+      - name: Set yaml file
+        uses: microsoft/variable-substitution@v1
+        with:
+          files: ${{ env.RESOUCRE_PATH }}
+        env:
+          spring.datasource.url: ${{ secrets.DATASOURCE_URL }}
+          spring.datasource.password: ${{ secrets.DATASOURCE_PASSWORD }}
 
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
